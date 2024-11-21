@@ -14,16 +14,15 @@ import model.DataMahasiswa
 @Composable
 fun DetailMahasiswaview(
     modifier: Modifier = Modifier,
-    mhs: DataMahasiswa,
-    navController: NavHostController,
-    onClickButton : (MutableList<String>) -> Unit
+    uiStateMahasiswa: DataMahasiswa,
+    onBackButton :() -> Unit
     ){
 
     val listDataMhs = listOf(
-        Pair("Nama", mhs.nama),
-        Pair("Gender", mhs.gender),
-        Pair("Alamat", mhs.alamat),
-        Pair("NIM", mhs.nim),
+        Pair("Nama", uiStateMahasiswa.nama),
+        Pair("Gender", uiStateMahasiswa.gender),
+        Pair("Alamat", uiStateMahasiswa.alamat),
+        Pair("NIM", uiStateMahasiswa.nim),
 
     )
     Column() {
@@ -32,10 +31,7 @@ fun DetailMahasiswaview(
         }
     }
     
-    Button(onClick = { navController.popBackStack()},
-       modifier = Modifier.padding(vertical = 18.dp)
-
-    ) {
+    Button(onClick = { onBackButton()}) {
         Text("Kembali")
     }
 
