@@ -1,14 +1,20 @@
 package com.example.praktikum6
 
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.ViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.praktikum6.ui.view.FormMahasiswaView
+import com.example.praktikum6.ui.view.DetailMahasiswaview
 import com.example.praktikum6.ui.viewModel.MahasiswaViewModel
 import model.DataJenisKelamin
 
@@ -19,22 +25,39 @@ enum class Halaman{
 }
 @Composable
 fun PengelolaHalaman(
-    navController: NavHostController = rememberNavController(),
-    viewModel: MahasiswaViewModel = viewModel()
+    modifier: Modifier = Modifier,
+    viewModel: MahasiswaViewModel = viewModel(),
+    navHost: NavHostController = rememberNavController()
 ){
-    val stateUI by viewModel.uiState.collectAsState()
-
-    NavHost(navController = navController, startDestination = Halaman.Formulir.name,){
+    Scaffold { isipadding ->
+        val uiState by viewModel.uiState.collectAsState()
+        NavHost(
+            modifier = modifier.padding(isipadding),
+            navController = navHost,
+            startDestination = Halaman.Formulir.name
+        ) {
         composable(route = Halaman.Formulir.name){
             val konteks = LocalContext.current
-            FormMahasiswaView(listJk = DataJenisKelamin.listJK.map{id ->
-                konteks.resources.getString(
-                    id
-                )
+
+            FormMahasiswaView(
+                listJK = DataJenisKelamin.listJK.map{
+                id -> konteks.resources.getString(id)
             },
-            onSubmitClicked = {}
+                onSubmitClicked = {
+                    viewModel.saveDataMahasiswa(it)
+                    navHost.navigate(Halaman.Formulir.name)
+                }
                 )
 
+            }
+            composable(route = Halaman.Detail.name){
+                DetailMahasiswaview(
+                    uiStateMahasiswa = uiState,
+                     onBackButton = { navHost.popBackStack() }
+                )
+            }
+        }
         }
     }
-}
+
+
