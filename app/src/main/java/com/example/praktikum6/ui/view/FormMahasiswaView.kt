@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.sp
 fun FormMahasiswaView(
     modifier: Modifier = Modifier,
     listJK: List<String>,
-    onSubmitClicked : (MutableList<String>) -> Unit
+    onClickButton : (MutableList<String>) -> Unit
 ){
     var nama by remember{ mutableStateOf("") }
     var alamat by remember{ mutableStateOf("") }
@@ -97,7 +97,8 @@ fun FormMahasiswaView(
 
 
         )
-        Button(onClick = { onSubmitClicked(dataMahasiswa)}) {
+        Button(onClick = {
+            onClickButton(dataMahasiswa)}) {
             
             Text(text = "Simpan")
             
