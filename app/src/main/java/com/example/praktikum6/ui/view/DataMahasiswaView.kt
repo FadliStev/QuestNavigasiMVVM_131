@@ -2,27 +2,41 @@ package com.example.praktikum6.ui.view
 
 import android.util.Pair
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import model.DataMahasiswa
 
 @Composable
-fun DetailMahasiswaview(modifier: Modifier = Modifier,
-                        uiStateMahasiswa: DataMahasiswa,){
+fun DetailMahasiswaview(
+    modifier: Modifier = Modifier,
+    uiStateMahasiswa: DataMahasiswa,
+    navController: NavHostController
+    ){
 
     val listDataMhs = listOf(
         Pair("Nama", uiStateMahasiswa.nama),
         Pair("Gender", uiStateMahasiswa.gender),
         Pair("Alamat", uiStateMahasiswa.alamat),
+        Pair("NIM", uiStateMahasiswa.nim),
 
     )
     Column() {
         listDataMhs.forEach { items ->
             CardSection(judulParam = items.first, isiParam = items.second)
         }
+    }
+    
+    Button(onClick = { navController.popBackStack()},
+       modifier = Modifier.padding(vertical = 18.dp)
+
+    ) {
+        Text("Kembali")
     }
 
 }
