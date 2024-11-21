@@ -8,22 +8,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import model.DataMahasiswa
 
 @Composable
 fun DetailMahasiswaview(
     modifier: Modifier = Modifier,
-    uiStateMahasiswa: DataMahasiswa,
-    navController: NavHostController
+    mhs: DataMahasiswa,
+    navController: NavHostController,
+    onClickButton : (MutableList<String>) -> Unit
     ){
 
     val listDataMhs = listOf(
-        Pair("Nama", uiStateMahasiswa.nama),
-        Pair("Gender", uiStateMahasiswa.gender),
-        Pair("Alamat", uiStateMahasiswa.alamat),
-        Pair("NIM", uiStateMahasiswa.nim),
+        Pair("Nama", mhs.nama),
+        Pair("Gender", mhs.gender),
+        Pair("Alamat", mhs.alamat),
+        Pair("NIM", mhs.nim),
 
     )
     Column() {
